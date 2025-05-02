@@ -6,9 +6,6 @@
 #include "object.h"
 #include "set.h"
 
-const void * Set;
-const void * Object;
-
 int main (){
   void * s = new(Set);
   void * a = add(s, new(Object));
