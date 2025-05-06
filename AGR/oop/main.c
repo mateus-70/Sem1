@@ -3,24 +3,22 @@
 #include <stdlib.h>
 
 #include "new.h"
-#include "object.h"
-#include "set.h"
+#include "String.h"
 
 int main (){
-  void * s = new(Set);
-  void * a = add(s, new(Object));
-  void * b = add(s, new(Object));
-  void * c = new(Object);
+  void * a = new(String, "a"), *aa = clone(a);
 
-  if (contains(s, a) && contains(s, b))
-  puts("ok");
-  if (contains(s, c))
-  puts("contains?");
-  if (differ(a, add(s, a)))
-  puts("differ?");
-  if (contains(s, drop(s, a)))
-  puts("drop?");
-  delete(drop(s, b));
-  delete(drop(s, c));
+  void * b = new(String, "b");
+
+  printf("sizeOf(a) == %u\n", sizeOf(a));
+  if (differ(a, b))
+    puts("ok");
+  if (differ(a, aa))
+    puts("differ?");
+  if(a == aa)
+    puts("clone?");
+
+  delete(a), delete(aa), delete(b);
+
   return 0;
 }
