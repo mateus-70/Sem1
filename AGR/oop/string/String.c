@@ -10,13 +10,31 @@
 struct String {
   const void * class;   // must be the first
   char * text;          // dynamic string
+  struct String * next;
+  unsigned count;
 };
 
-// static const size_t _String = sizeof(struct String); // eu quem fiz essa linha semelhante as outras mas deve estar errado.
+static struct String * ring;
 
 static void * String_ctor (void * _self, va_list * app){
   struct String * self = _self;
   const char * text = va_arg(*app, const char *);
+
+  if (ring){
+    struct String * p = ring;
+    do
+      if (strcmp(p -> text, text) == 0){
+        ++p -> count;
+        free(self);
+        return p;
+      }
+    while( (p = p -> next) != ring );
+  }else
+    ring = self;
+
+  self -> next = ring -> next, ring -> next = self;
+  self -> count = 1;
+
   self -> text = malloc(strlen(text)+1);
   assert(self->text);
   strcpy(self -> text, text);
@@ -26,13 +44,34 @@ static void * String_ctor (void * _self, va_list * app){
 static void * String_dtor (void * _self){
   struct String * self = _self;
 
+  if (-- self -> count > 0)
+    return 0;
+
+  assert(ring);
+  if (ring == self)
+    ring = self -> next;
+  if (ring == self)
+    ring = 0;
+  else{
+    struct String * p = ring;
+
+    while (p -> next != self){
+      p = p -> next;
+      assert(p != ring);
+    }
+    p -> next = self -> next;
+  }
+
+
   free(self -> text), self -> text=0;
   return self;
 }
 
-static void * String_clone ( const void * _self){
-  const struct String * self = _self;
-  return new(String, self -> text);
+static void * String_clone (const void * _self){
+  struct String * self = (void *) _self;
+
+  ++ self -> count;
+  return self;
 }
 
 static int String_differ (const void * _self, const void * _b){

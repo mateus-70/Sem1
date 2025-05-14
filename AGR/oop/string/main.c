@@ -10,7 +10,7 @@ int main (){
 
   void * b = new(String, "b");
 
-  printf("sizeOf(a) == %u\n", sizeOf(a));
+  printf("sizeOf(a) == %lu\n", sizeOf(a));
   if (differ(a, b))
     puts("ok");
   if (differ(a, aa))

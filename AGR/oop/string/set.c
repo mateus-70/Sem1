@@ -9,7 +9,7 @@
 #include "new.h"
 #include "new_p.h"
 
-static int heap [MANY];
+// static int heap [MANY];
 
 struct Set { 
   const void * class;
