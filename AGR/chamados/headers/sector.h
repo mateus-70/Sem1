@@ -5,6 +5,8 @@
 #define SECTOR_MAXNAME 100
 
 extern unsigned num_sectors; // INCREMENT ONLY // NEVER EVER REDUCES
+extern struct Sector * all_sectors[MAX_SECTORS];
+//extern struct Sector_storage all_sectors[MAX_SECTORS];
 
 struct Sector { 
   const void * class;
@@ -19,7 +21,6 @@ struct Sector_storage {
   struct User * user_id_in_charge;
 };
 
-extern unsigned num_sectors; // INCREMENT ONLY // NEVER EVER REDUCES
-extern struct Sector_storage all_sectors[MAX_SECTORS];
+
 
 #endif

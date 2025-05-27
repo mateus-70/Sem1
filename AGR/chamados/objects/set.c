@@ -6,6 +6,7 @@
 // #include "String.h"
 #include "../headers/set.h"
 #include "../headers/user.h"
+#include "../headers/sector.h"
 // #include "object.h"
 #include "../headers/new.h"
 #include "../headers/new_p.h"
@@ -82,6 +83,38 @@ int contains (const void * _Sector, const void * _user){
   return find(_Sector, _user) != 0 ;
 }
 
+void * identify(const void * _class, ... ){
+  const struct Class * class = _class;
+  va_list ap;
+  va_start(ap, _class);
+  if(class == User){
+    unsigned id = va_arg(ap, unsigned);
+    for(int i=0; i<num_users; i++){
+      if(all_users[i]->id == id){
+        va_end(ap);
+        return all_users[i];
+      }
+    }
+    getchar();
+  }else if(class == Sector){
+    int id = va_arg(ap, int);
+    for(int i=0; i<num_sectors; i++){
+      if(all_sectors[i]->id == id){
+        va_end(ap);
+        getchar();
+        return all_sectors[i];
+      }
+    }
+    va_end(ap);
+  }else{
+    printf("Falha ao identificar. Abort() \n\n");
+    getchar();
+    abort();
+    va_end(ap);
+    return 0;
+  }
+    return 0;
+}
 
 
 // void * drop (void * _Sector, const void * _user){

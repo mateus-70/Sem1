@@ -13,7 +13,10 @@
 
 extern short session;
 
-extern struct User_storage all_users[MAX_USERS];
+//extern struct User_storage all_users[MAX_USERS];
+extern struct User * all_users[MAX_USERS];
+
+struct User * current_user = 0;
 
 // return 0 if logged sucessfully, return 1 otherwise.
 int login(){
@@ -28,21 +31,12 @@ int login(){
   fgets(password, 128, stdin);
   remove_crlf(password);
 
-  printf("numUsers=%u\n",num_users);
   for(int i=0; i<num_users; i++){
-    printf("-%s-%s.\n",login, all_users[i].login);
-    if(!strcmp(login, all_users[i].login) && !strcmp(password, all_users[i].password)){
+
+    if(!strcmp(login, all_users[i] -> login) && !strcmp(password, all_users[i] -> password)){
       session = AUTHENTICATED;
-      void * current_user = new(
-        User, 
-        all_users[i].id, 
-        all_users[i].login, 
-        all_users[i].password, 
-        all_users[i].permission, 
-        all_users[i].given_name, 
-        all_users[i].surname, 
-        all_users[i].sector_id);
-        return 0;
+      current_user = all_users[i];
+      return 0;
     }
   }
   printf("\nUsuario ou senha incorretos!\n\n");

@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
 #include <assert.h>
@@ -23,6 +24,8 @@ static void * Sector_ctor(void * _self, va_list * app){
 
   self -> user_id_in_charge = user_id_in_charge;
 
+  store(self);
+  num_sectors++;
   return self;
 }
 
@@ -40,13 +43,9 @@ int Sector_differ(const void * _self, const void * _b){
 
 static void * Sector_store(void * _self){
   struct Sector * self = _self;
-  if(num_sectors < MAX_SECTORS){
-    all_sectors[num_sectors].id = self->id;
-    strcpy(all_sectors[num_sectors].name, self->name);
-    all_sectors[num_sectors].user_id_in_charge = self->user_id_in_charge;
-    num_sectors++;
-  }
-  return _self;
+  assert(num_sectors < MAX_SECTORS);
+  all_sectors[num_sectors] = self;
+  return self;
 }
 
 static const struct Class _Sector = {

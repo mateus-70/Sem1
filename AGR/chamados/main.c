@@ -19,8 +19,11 @@
 unsigned num_sectors = 0;
 unsigned num_users = 0;
 short session = UNAUTHENTICATED;
-struct User_storage all_users[MAX_USERS] = {0};
-struct Sector_storage all_sectors[MAX_SECTORS]={0};
+//struct User_storage all_users[MAX_USERS] = {0};
+//struct Sector_storage all_sectors[MAX_SECTORS]={0};
+
+struct User * all_users[MAX_USERS] = {0};
+struct Sector * all_sectors[MAX_SECTORS] = {0};
 
 void start_variables(){
   const void * default_sector = new(Sector, DEFAULT_SECTOR_ID, "Setor comum", 0);
@@ -50,19 +53,20 @@ int main() {
 
 
   if(!strcmp(options[selected], LOGIN)){
-    if(!login())
-      printf("LOGADO PRA CRL\n\n");
-    else
-      printf("FALHA AUTENTICACAO\n\n");
+    if(!login()){
+      printf("Voce esta autenticado.\n");
+    }else{
+      printf("Falha autenticacao\n");
+    }
 
   }else if(!strcmp(options[selected], SIGNUP)){
     signup();
-    if(!login())
-      printf("LOGADO PRA CRL\n\n");
-    else
-      printf("FALHA AUTENTICACAO\n\n");
+    if(!login()){
+      printf("Voce esta autenticado.\n");
+    }else{
+      printf("Falha autenticacao\n");
+    }
   }
-
   return 0;
 }
 

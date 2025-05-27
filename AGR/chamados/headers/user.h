@@ -9,6 +9,8 @@
 
 extern unsigned num_users;
 
+//extern struct User_storage all_users[MAX_USERS];
+extern struct User * all_users[MAX_USERS];
 extern const void * User;
 
 struct User{

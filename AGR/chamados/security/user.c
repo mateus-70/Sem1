@@ -12,7 +12,6 @@
 
 
 
-extern struct User_storage all_users[MAX_USERS];
 
 static void * User_ctor(void * _self, va_list * app){
   struct User * self = _self;
@@ -27,6 +26,8 @@ static void * User_ctor(void * _self, va_list * app){
   self -> login = malloc(strlen(login)+1);
   assert(self -> login);
   strcpy(self -> login, login);
+//  printf("USER_CTOR self->login=%s.\n", self-> login);
+//  getchar();
 
   self -> password = malloc(strlen(password)+1);
   assert(self -> password);
@@ -43,7 +44,13 @@ static void * User_ctor(void * _self, va_list * app){
   strcpy(self -> surname, surname);
   //printf("Login: %s.\n permissino=%d.\n", login, permission);
 
-  // sector id?
+//  printf("USER CTOR sector_id=%d.\n", sector_id );
+  void * in = identify(Sector, sector_id);
+  assert(in);
+//  printf("user_ctor-> Setor ID=%d.\n, sectorADDR=%p.\n", sector_id,  in);
+  self -> in = in;
+  store(self);
+  num_users++;
 
   return self;
 }
@@ -61,36 +68,11 @@ int User_differ(const void * _self, const void * _b){
 }
 
 static void * User_store(void * _self){
-  struct User* self = _self;
-  printf("Dentro user_store\n\n...");
-  if(num_users < MAX_USERS){
-  printf("1\n");
-    all_users[num_users].id = self->id;
-  printf("2\n");
-    strcpy(all_users[num_users].login, self->login);
-  printf("3\n");
-    strcpy(all_users[num_users].password, self->password);
-  printf("4\n");
-    all_users[num_users].permission = self->permission;
-  printf("5\n");
-    strcpy(all_users[num_users].given_name, self->given_name);
-  printf("6\n");
-    strcpy(all_users[num_users].surname, self->surname);
-  printf("7\n");
-    all_users[num_users].sector_id = (*self).in->id;
-  printf("8\n");
-    num_users++;
-  printf("9\n");
-  }
-  printf("\nid=%u.\tlogin=%s\tpass=%s\tperm=%d\tgiv=%s\tsurn=%s\tsecID=%u.\n\n",
-    all_users[num_users].id,
-    all_users[num_users].login, 
-    all_users[num_users].password,
-    all_users[num_users].permission,
-    all_users[num_users].given_name,
-    all_users[num_users].surname,
-    all_users[num_users].sector_id );
-  return _self;
+  void * self = _self;
+
+  assert(num_users < MAX_USERS);
+  all_users[num_users] = self;
+  return self;
 }
 
 static const struct Class _User = {

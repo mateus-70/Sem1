@@ -42,13 +42,11 @@ void * add_user(){
     printf("Ei ah! OOO");
     //implementar selecao de area
   }
-  printf("HERE?");
-  getchar();
-  void * user = new(User, login, password, DEFAULT_PERMISSION_ID, given_name, surname, DEFAULT_SECTOR_ID);
-  printf("TTTHERE?");
-  getchar();
-  store(user);
-  return user;
+  void * new_user = new(User, login, password, DEFAULT_PERMISSION_ID, given_name, surname, DEFAULT_SECTOR_ID);
+  // printf("TTTHERE?");
+  if (!new_user)
+    store(new_user);
+  return new_user;
 }
 
 void * signup(){
