@@ -5,6 +5,7 @@
 #include "../headers/new.h"
 #include "../headers/set.h"
 #include "../headers/user.h"
+#include "../headers/sector.h"
 #include "../headers/mystrings.h"
 
 void * add_user(){

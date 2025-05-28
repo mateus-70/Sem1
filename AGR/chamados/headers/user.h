@@ -6,6 +6,7 @@
 #define SURNAME_MAXSIZE 100
 #define PASSWORD_MAXSIZE 128
 #define DEFAULT_PERMISSION_ID -1
+#define DEFAULT_ADMIN_PERMISSION 1
 
 extern unsigned num_users;
 

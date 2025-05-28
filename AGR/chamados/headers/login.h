@@ -4,8 +4,6 @@
 #define AUTHENTICATED 0
 #define UNAUTHENTICATED 1
 
-#define DEFAULT_SECTOR_ID -1
-#define DEFAULT_SECTOR {_class, -1, "Setor comum", 0}
 
 
 #define DEFAULT_USER_PERMISSION -1

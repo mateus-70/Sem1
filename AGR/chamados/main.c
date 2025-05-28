@@ -26,7 +26,9 @@ struct User * all_users[MAX_USERS] = {0};
 struct Sector * all_sectors[MAX_SECTORS] = {0};
 
 void start_variables(){
-  const void * default_sector = new(Sector, DEFAULT_SECTOR_ID, "Setor comum", 0);
+  //const void * default_sector = new(Sector, DEFAULT_SECTOR_ID, "Setor comum", 0);
+  retrieve(Sector);
+  retrieve(User);
 }
 
 int main() {

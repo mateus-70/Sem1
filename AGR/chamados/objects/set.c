@@ -14,6 +14,9 @@
 #include "../headers/mystrings.h"
 
 
+void retrieve_users();
+void retrieve_sectors();
+
 // static const size_t _Sector = sizeof(struct Sector);
 static const size_t _Class = sizeof(struct Class);
 
@@ -95,13 +98,12 @@ void * identify(const void * _class, ... ){
         return all_users[i];
       }
     }
-    getchar();
   }else if(class == Sector){
     int id = va_arg(ap, int);
+    // printf("Numsectors: %u.\n", num_sectors);
     for(int i=0; i<num_sectors; i++){
       if(all_sectors[i]->id == id){
         va_end(ap);
-        getchar();
         return all_sectors[i];
       }
     }
@@ -152,4 +154,50 @@ void * store(void * _self){
   const struct Class * const * cp = _self;
   assert(_self && * cp);
   return (*cp) -> store(_self);
+}
+
+void retrieve(const void * _class){
+  const void * class = _class;
+
+  if(class == User){
+    retrieve_users();
+  }else if(class == Sector){
+    retrieve_sectors();
+  }else{
+    printf("Falha ao recuperar dados. Abort()");
+    abort();
+  }
+}
+
+void retrieve_users(){
+  FILE * fp = fopen("./storage/users.data", "r");
+  assert(fp);
+  char user_login[LOGIN_MAXSIZE], user_password[PASSWORD_MAXSIZE];
+  int user_permission, user_sector_id;
+  unsigned user_id;
+  char user_given_name[GIVEN_NAME_MAXSIZE], user_surname[SURNAME_MAXSIZE]; 
+  // struct Sector * in;
+  while( 
+    fscanf(fp, "%u,%[a-zA-Z],%[a-zA-Z0-9],%d,%[a-zA-Z],%[a-zA-Z],%d", 
+      &user_id,
+      user_login, user_password, &user_permission, 
+      user_given_name, user_surname, &user_sector_id) == 7){
+       //printf("%u, %s, %s, %d, %s, %s, %d.\n\n", user_id, user_login, user_password, user_permission, 
+      //user_given_name, user_surname, user_sector_id);
+      // in = identify(Sector, user_sector_id);
+    new(User, user_id, user_login, user_password, &user_permission, 
+      user_given_name, user_surname, user_sector_id);
+  }
+}
+
+void retrieve_sectors(){
+    FILE * fp = fopen("./storage/sectors.data", "r");
+    char sector_name[SECTOR_NAME_MAXSIZE];
+    int sector_id;
+    unsigned user_id_in_charge;
+    assert(fp);
+    while(
+      fscanf(fp, "%d,%[a-zA-Z],%u", &sector_id, sector_name, &user_id_in_charge) == 3){
+      new(Sector, sector_id, sector_name, user_id_in_charge);
+    }
 }

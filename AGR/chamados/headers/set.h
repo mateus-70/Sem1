@@ -8,6 +8,7 @@ extern const void * Sector;
 
 void * new (const void * class, ...);
 void * store(void * self);
+void retrieve(const void * class);
 
 void * add (void * sector, const void * user);
 void * find (const void * sector, const void * user);

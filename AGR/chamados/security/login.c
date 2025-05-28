@@ -31,15 +31,18 @@ int login(){
   fgets(password, 128, stdin);
   remove_crlf(password);
 
+  printf("Num_users=%u.\n", num_users);
   for(int i=0; i<num_users; i++){
 
+    printf("Login: %s - %s.\n", login, all_users[i] -> login);
+    printf("Senha: %s - %s.\n", password, all_users[i] -> password);
     if(!strcmp(login, all_users[i] -> login) && !strcmp(password, all_users[i] -> password)){
       session = AUTHENTICATED;
       current_user = all_users[i];
       return 0;
     }
   }
-  printf("\nUsuario ou senha incorretos!\n\n");
+  printf("Falha na autenticacao.\n");
 
   return 1;
 }

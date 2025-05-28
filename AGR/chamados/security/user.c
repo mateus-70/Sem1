@@ -15,6 +15,7 @@
 
 static void * User_ctor(void * _self, va_list * app){
   struct User * self = _self;
+  const unsigned id = va_arg(*app, const unsigned);
   const char * login = va_arg(*app, const char *);
   const char * password = va_arg(*app, const char *);
   const char permission = va_arg(*app, const int);
@@ -22,6 +23,8 @@ static void * User_ctor(void * _self, va_list * app){
   const char * given_name = va_arg(*app, const char *);
   const char * surname = va_arg(*app, const char *);
   const int sector_id = va_arg(*app, const int);
+
+  self -> id = id;
 
   self -> login = malloc(strlen(login)+1);
   assert(self -> login);
@@ -46,6 +49,7 @@ static void * User_ctor(void * _self, va_list * app){
 
 //  printf("USER CTOR sector_id=%d.\n", sector_id );
   void * in = identify(Sector, sector_id);
+  // printf("%d ->sectorid\n", sector_id);
   assert(in);
 //  printf("user_ctor-> Setor ID=%d.\n, sectorADDR=%p.\n", sector_id,  in);
   self -> in = in;
