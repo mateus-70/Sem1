@@ -182,10 +182,11 @@ void retrieve_users(){
       &user_id,
       user_login, user_password, &user_permission, 
       user_given_name, user_surname, &user_sector_id) == 7){
-       //printf("%u, %s, %s, %d, %s, %s, %d.\n\n", user_id, user_login, user_password, user_permission, 
-      //user_given_name, user_surname, user_sector_id);
+       //printf("RETRIEVE USERS: %u, %s, %s, %d, %s, %s, %d.\n\n", user_id, user_login, user_password, user_permission, 
+      // user_given_name, user_surname, user_sector_id);
       // in = identify(Sector, user_sector_id);
-    new(User, user_id, user_login, user_password, &user_permission, 
+      // getchar();
+    new(User, user_id, user_login, user_password, user_permission, 
       user_given_name, user_surname, user_sector_id);
   }
 }
@@ -197,7 +198,12 @@ void retrieve_sectors(){
     unsigned user_id_in_charge;
     assert(fp);
     while(
-      fscanf(fp, "%d,%[a-zA-Z],%u", &sector_id, sector_name, &user_id_in_charge) == 3){
+      fscanf(fp, "%d,%[a-zA-Z ],%u", &sector_id, sector_name, &user_id_in_charge) == 3){
       new(Sector, sector_id, sector_name, user_id_in_charge);
     }
+}
+
+void throw_error(const char * function_name){
+  printf("Erro na funcao %s.\n Abortando.\n", function_name);
+  abort();
 }

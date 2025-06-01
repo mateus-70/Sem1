@@ -34,12 +34,13 @@ int login(){
   printf("Num_users=%u.\n", num_users);
   for(int i=0; i<num_users; i++){
 
-    printf("Login: %s - %s.\n", login, all_users[i] -> login);
-    printf("Senha: %s - %s.\n", password, all_users[i] -> password);
+//    printf("Login: %s - %s.\n", login, all_users[i] -> login);
+//    printf("Senha: %s - %s.\n", password, all_users[i] -> password);
     if(!strcmp(login, all_users[i] -> login) && !strcmp(password, all_users[i] -> password)){
       session = AUTHENTICATED;
       current_user = all_users[i];
-      return 0;
+       //printf("LOGIN: %u, %s, %s, %d, %s, %s, %d.\n\n", current_user -> id,current_user -> login, current_user -> password, current_user -> permission, current_user -> given_name, current_user -> surname, current_user -> in->id); 
+       return 0;
     }
   }
   printf("Falha na autenticacao.\n");

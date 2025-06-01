@@ -15,6 +15,7 @@
 #include "headers/sector.h"
 #include "headers/user.h"
 #include "headers/set.h"
+#include "headers/add_user.h"
 
 unsigned num_sectors = 0;
 unsigned num_users = 0;
@@ -38,7 +39,7 @@ int main() {
   char *options[] = {
       LOGIN,
       SIGNUP,
-      SAIR
+      EXIT
   };
   int num_options = sizeof(options) / sizeof(options[0]);
   Dropdown *dropdown = create_dropdown(title, options, num_options);
@@ -56,7 +57,14 @@ int main() {
 
   if(!strcmp(options[selected], LOGIN)){
     if(!login()){
-      printf("Voce esta autenticado.\n");
+      printf("Voce esta autenticado como:" 
+        "\nusuario: %s\nnome: %s\nsobrenome: %s\npermissao=%d.\n", 
+        current_user->login, current_user->given_name, 
+        current_user->surname, current_user->permission);
+      printf("Pressione qualquer tecla para continuar.\n");
+      getchar();
+      printf(CLEAR_SCREEN);
+      home();
     }else{
       printf("Falha autenticacao\n");
     }

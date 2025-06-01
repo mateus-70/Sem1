@@ -6,14 +6,9 @@
 
 
 
-#define DEFAULT_USER_PERMISSION -1
-#define SUPERUSER_PERMISSION 0
-#define COORDINATION_PERMISSION 1
-#define SECRETARY_PERMISSION 2
-#define TECHNICIAN_PERMISSION 3
 
 #define LOGIN "Login"
-#define SAIR "Sair"
+#define EXIT "Sair"
 #define SIGNUP "Cadastre-se"
 
 #define LOGIN_MAXSIZE 64

@@ -2,9 +2,10 @@
 #define SECTOR_H
 
 #define MAX_SECTORS 100
+#define ROLE_NAME_MAXSIZE 50
 #define SECTOR_NAME_MAXSIZE 100
-#define DEFAULT_SECTOR_ID -1
 #define DEFAULT_SECTOR {_class, -1, "Setor comum", 0}
+#define DEFAULT_SECTOR_ID -1
 #define DEFAULT_SECTOR_ADMIN 1
 
 extern unsigned num_sectors; // INCREMENT ONLY // NEVER EVER REDUCES

@@ -43,7 +43,7 @@ void * add_user(){
     printf("Ei ah! OOO");
     //implementar selecao de area
   }
-  void * new_user = new(User, login, password, DEFAULT_PERMISSION_ID, given_name, surname, DEFAULT_SECTOR_ID);
+  void * new_user = new(User, login, password, DEFAULT_USER_PERMISSION, given_name, surname, DEFAULT_SECTOR_ID);
   // printf("TTTHERE?");
   if (!new_user)
     store(new_user);
